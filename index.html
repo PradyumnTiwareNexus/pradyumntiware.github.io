@@ -1,368 +1,448 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>PradyumnTiwareNexus — Cybersecurity Researcher & Bug Hunter</title>
-<meta name="description" content="Pradyumn Tiware Nexus — Cybersecurity Researcher, Bug Bounty Hunter, Recon Automation Developer." />
-<link rel="icon" href="assets/favicon.png" />
-<style>
-  :root{
-    --bg0:#031018; --bg1:#07151a; --card:rgba(255,255,255,0.04);
-    --glass: rgba(255,255,255,0.03);
-    --accent-a: #00e0ff; --accent-b:#ff4fb0;
-    --muted:#98cdd6; --glass-strong: rgba(255,255,255,0.055);
-    --radius:16px; --soft-shadow: 0 10px 30px rgba(2,8,12,0.6);
-  }
-  *{box-sizing:border-box}
-  html,body{height:100%;margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,'Helvetica Neue',Arial;color:#dff8ff;background:linear-gradient(180deg,var(--bg0),#041218 55%);-webkit-font-smoothing:antialiased}
-  a{color:var(--accent-a);text-decoration:none}
-  .container{max-width:1100px;margin:0 auto;padding:28px}
-  header{display:flex;align-items:center;justify-content:space-between;padding:14px 0}
-  .brand{font-weight:800;font-size:18px}
-  nav a{margin-left:16px;color:var(--muted);font-weight:600}
-  /* hero grid */
-  .hero{display:grid;grid-template-columns:320px 1fr;gap:22px;margin-top:12px}
-  .card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.06));padding:18px;border-radius:var(--radius);backdrop-filter:blur(8px);box-shadow:var(--soft-shadow);transition:transform .2s,box-shadow .2s}
-  .card:hover{transform:translateY(-6px)}
-  /* profile */
-  .profile-card{text-align:center;overflow:visible}
-  .avatar-wrap{position:relative;width:180px;height:180px;margin:0 auto}
-  .avatar{width:180px;height:180px;object-fit:cover;border-radius:50%;display:block;border:10px solid rgba(0,0,0,0.55);background:#111}
-  .avatar-ring{position:absolute;left:-6px;top:-6px;width:192px;height:192px;border-radius:50%;pointer-events:none;filter:blur(18px);mix-blend-mode:screen;animation:pring 3.8s infinite}
-  @keyframes pring{0%{box-shadow:0 0 36px rgba(0,224,255,0.12)}50%{box-shadow:0 0 120px rgba(255,79,176,0.12)}100%{box-shadow:0 0 36px rgba(0,224,255,0.12)}}
-  .profile-name{font-weight:800;margin:12px 0 4px}
-  .profile-sub{font-size:13px;color:var(--muted);margin:0}
-  .btn-row{display:flex;gap:12px;justify-content:center;margin-top:12px}
-  .btn{padding:10px 16px;border-radius:12px;border:none;background:linear-gradient(90deg,var(--accent-a),var(--accent-b));color:#021218;font-weight:700;cursor:pointer}
-  .btn.ghost{background:transparent;border:1px solid rgba(255,255,255,0.04);color:var(--muted)}
-  /* lead card */
-  .lead-card h1{font-size:28px;margin:0 0 10px}
-  .lead-card p{color:var(--muted);margin:0 0 12px}
-  .stats-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:12px}
-  .stat{padding:18px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(0,0,0,0.03))}
-  .stat .big{font-size:36px;font-weight:900;color:var(--accent-a)}
-  .stat .lbl{color:var(--muted);font-size:13px;margin-top:6px}
-  /* tools / expertise panel (right column alternative) */
-  .expert-grid{display:grid;grid-template-columns:1fr;gap:12px;margin-top:12px}
-  .expert-block{display:flex;flex-direction:column;gap:8px;padding:12px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(0,0,0,0.03))}
-  .expert-block h4{margin:0;font-size:14px;color:var(--muted)}
-  .expert-list{display:flex;flex-wrap:wrap;gap:10px;margin-top:6px}
-  .chip{padding:8px 12px;border-radius:10px;background:rgba(255,255,255,0.02);font-weight:700;cursor:default}
-  /* main sections */
-  section.section{margin-top:18px}
-  .projects{display:flex;gap:14px;flex-wrap:wrap}
-  .project-card{width:320px;padding:16px;border-radius:12px;transition:transform .25s;cursor:pointer}
-  .project-card:hover{transform:translateY(-8px) scale(1.01)}
-  /* music */
-  .music-card .player{display:flex;gap:16px;align-items:center;flex-wrap:wrap}
-  .playlist{flex:1;min-width:220px}
-  .track{padding:10px;border-radius:10px;margin-bottom:8px;background:rgba(255,255,255,0.02);cursor:pointer;display:flex;justify-content:space-between}
-  .track.playing{background:linear-gradient(90deg,var(--accent-a),var(--accent-b));color:#001}
-  .controls button{padding:8px 12px;border-radius:10px;border:none;background:linear-gradient(90deg,var(--accent-a),var(--accent-b));color:#001;cursor:pointer}
-  /* tools visual grid */
-  .tools-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px}
-  .tool-card{padding:12px;border-radius:10px;background:rgba(255,255,255,0.02);text-align:center;cursor:default}
-  .tool-card .icon{font-size:26px;display:block;margin-bottom:8px}
-  /* contact form */
-  .contact-form label{display:block;margin:8px 0;color:var(--muted)}
-  .contact-form input,.contact-form textarea{width:100%;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:#dff8ff}
-  /* hover/glow on card when cursor over */
-  .hover-glow{position:fixed;pointer-events:none;width:260px;height:260px;border-radius:50%;filter:blur(36px);mix-blend-mode:screen;opacity:0.45;transition:transform .06s linear;z-index:9999;display:none}
-  /* responsive */
-  @media (max-width:1000px){
-    .hero{grid-template-columns:1fr;}.tools-grid{grid-template-columns:repeat(3,1fr)}.project-card{width:100%}
-  }
-</style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>PradyumnTiwareNexus — Cybersecurity Researcher</title>
+  <meta name="description" content="Pradyumn Tiware Nexus — Cybersecurity Researcher, Bug Bounty Hunter, Recon Automation Developer."/>
+  <meta property="og:title" content="Pradyumn Tiware Nexus"/>
+  <meta property="og:description" content="Cybersecurity Researcher • Bug Bounty Hunter • Recon Automation Developer."/>
+  <meta property="og:image" content="assets/og-card.png"/>
+  <link rel="icon" href="assets/favicon.png" />
+  <style>
+    :root{
+      --bg:#071018;
+      --card-bg: rgba(8,18,22,0.62);
+      --glass-border: rgba(255,255,255,0.04);
+      --accent1: #19e1ff; /* cyan */
+      --accent2: #ff4fb0; /* pink */
+      --muted: #9fb7c0;
+      --glass-glow: rgba(25,225,255,0.07);
+    }
+
+    html,body{height:100%; margin:0; font-family:Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; background: linear-gradient(180deg,#05070a 0%, #061016 50%); color:#e7fbff; -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;}
+    a{color:var(--accent1); text-decoration:none}
+    .container{width:min(1200px,94%); margin:0 auto; padding:28px 0;}
+
+    /* Header */
+    header.nav{position:sticky; top:0; z-index:50; backdrop-filter: blur(6px); background: linear-gradient(180deg, rgba(0,0,0,0.18), rgba(0,0,0,0.06)); border-bottom:1px solid rgba(255,255,255,0.02);}
+    header .container{display:flex; align-items:center; justify-content:space-between; gap:12px;}
+    .brand{font-weight:800; letter-spacing:0.4px}
+    header nav a{margin-left:18px; color:#cdeef7; font-weight:600; opacity:.95}
+
+    main{padding:28px 0 80px;}
+
+    /* Hero */
+    .hero-grid{display:grid; grid-template-columns:320px 1fr; gap:30px; align-items:start}
+    .card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.045)); border-radius:14px; padding:20px; box-shadow: 0 8px 30px rgba(2,8,12,0.6); border:1px solid var(--glass-border); backdrop-filter: blur(8px); transition:transform .18s ease; overflow:hidden}
+    .profile-card{display:flex; flex-direction:column; align-items:center; text-align:center; padding:26px}
+    .avatar-wrap{position:relative; width:200px; height:200px; margin:6px 0 12px}
+    .avatar{width:100%; height:100%; border-radius:50%; object-fit:cover; display:block; border:12px solid rgba(255,255,255,0.95); box-shadow: 0 10px 40px rgba(0,0,0,0.6);}
+
+    /* animated neon ring */
+    .avatar-wrap::before{
+      content:""; position:absolute; inset: -18px; border-radius:50%;
+      background: radial-gradient(circle at 20% 20%, rgba(25,225,255,0.12), transparent 20%),
+                  radial-gradient(circle at 80% 80%, rgba(255,79,176,0.09), transparent 20%);
+      filter: blur(28px); z-index:-2;
+      transition: transform .25s ease;
+    }
+    .avatar-wrap::after{
+      content:""; position:absolute; inset:-30px; border-radius:50%;
+      box-shadow: 0 0 48px 14px rgba(25,225,255,0.035), 0 0 26px 6px rgba(255,79,176,0.02);
+      opacity:.9; z-index:-3; transition: all .2s ease;
+    }
+
+    .profile-name{font-size:20px; font-weight:800; margin:8px 0 2px}
+    .profile-sub{color:var(--muted); font-weight:600; font-size:13px}
+
+    .stat-row{display:flex; gap:12px; margin-top:12px}
+    .stat{background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(0,0,0,0.03)); padding:10px 12px; border-radius:10px; width:110px; text-align:center; box-shadow: inset 0 -4px 8px rgba(0,0,0,0.22)}
+    .stat-value{font-weight:800; font-size:20px; color:var(--accent1)}
+    .stat-label{font-size:12px; color:var(--muted)}
+
+    .lead-card h1{font-size:34px; margin:4px 0 8px; line-height:1.02}
+    .accent{color:var(--accent1)}
+    .muted{color:var(--muted); margin-bottom:12px}
+    .cta-row{display:flex; gap:12px; margin:16px 0}
+    .btn{display:inline-block; padding:12px 16px; border-radius:10px; background: linear-gradient(90deg,var(--accent1),var(--accent2)); color:#041017; font-weight:800; box-shadow: 0 8px 30px rgba(0,0,0,0.45)}
+    .btn.ghost{background:transparent; color:#cdeef7; border:1px solid rgba(255,255,255,0.04)}
+
+    .quick{color:var(--muted); font-weight:600; margin-top:6px}
+
+    /* Sections */
+    .section{margin-top:28px}
+    .section .card{padding:26px}
+    h2{font-size:22px; margin:0 0 12px; color:#e7fbff}
+
+    /* ABOUT layout -> left content + right boxes */
+    .about-grid{display:grid; grid-template-columns: 1fr 360px; gap:22px; align-items:start}
+    .about-left p{color:#cfeff8; line-height:1.6}
+    .about-right{display:grid; gap:12px; grid-template-columns:1fr 1fr}
+    .info-box{padding:18px; background:linear-gradient(180deg, rgba(255,255,255,0.015), rgba(0,0,0,0.03)); border-radius:12px; text-align:center; font-weight:800; color:#cfeff8}
+    .info-box .mut{font-weight:600; color:var(--muted); font-size:13px}
+
+    /* EXP/TOOLS grid: make boxes glassy and hoverable */
+    .right-tools{display:grid; grid-template-columns:1fr; gap:12px}
+    .skill-pill{display:inline-flex; align-items:center; gap:10px; padding:10px 12px; background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(0,0,0,0.035)); border-radius:10px; color:#dff8ff; font-weight:700; margin:6px 6px 6px 0; border:1px solid rgba(255,255,255,0.02)}
+
+    /* Tools & Tech - pills (from earlier answer) */
+    .tools-container{margin-top:6px; padding:18px; border-radius:12px; background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.04)); box-shadow: 0 12px 40px rgba(2,8,12,0.6); backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.03)}
+    .tools-title{font-size:18px; margin:0 0 12px; color:#e7fbff; font-weight:800}
+    .tools-pills{display:flex; gap:10px; flex-wrap:wrap; align-items:center}
+    .tool-pill{display:inline-flex; align-items:center; gap:10px; padding:10px 14px; border-radius:12px; background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(0,0,0,0.035)); border: 1px solid rgba(255,255,255,0.02); color: #cdeef7; font-weight:700; font-size:14px; cursor:default; transition: transform .16s ease, box-shadow .16s ease, background .16s ease; box-shadow: 0 6px 20px rgba(2,8,12,0.45); user-select:none}
+    .tool-pill .pill-icon{width:26px; height:26px; display:inline-flex; align-items:center; justify-content:center; font-size:16px; border-radius:8px; background: linear-gradient(90deg, rgba(0,224,255,0.08), rgba(255,79,176,0.06)); box-shadow: inset 0 -2px 6px rgba(0,0,0,0.25)}
+    .tool-pill:hover{transform: translateY(-6px) scale(1.02); box-shadow: 0 18px 40px rgba(0,200,255,0.06), 0 6px 18px rgba(0,0,0,0.5); background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.05))}
+    .tool-pill.big{padding:12px 18px; font-size:15px}
+    @media (max-width:900px){ .hero-grid{grid-template-columns:1fr; } .about-grid{grid-template-columns:1fr} }
+
+    /* Projects simple cards */
+    .cards{display:flex; gap:12px; flex-wrap:wrap}
+    .project{padding:14px; border-radius:10px; background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(0,0,0,0.03)); width:320px; box-shadow:0 8px 26px rgba(0,0,0,0.45)}
+
+    /* music box */
+    .music-card{display:flex; gap:12px; align-items:center; padding:14px; border-radius:12px}
+    .player{width:100%; display:flex; gap:12px; align-items:center}
+    .playlist{max-width:420px}
+    .play-btn{padding:10px 14px; border-radius:10px; background:linear-gradient(90deg,var(--accent1),var(--accent2)); color:#041017; font-weight:800; cursor:pointer}
+
+    /* contact */
+    .contact-list a{color:#cfeef8}
+    form.contact{display:flex; flex-direction:column; gap:8px; max-width:520px}
+
+    footer{padding:22px 0; color:var(--muted); text-align:center}
+
+    /* small reveal animations for cards */
+    .card.visible{transform:translateY(0); opacity:1}
+    .card{transform:translateY(10px); opacity:0; transition:all .36s ease}
+    /* hover glow element style is appended via JS */
+
+  </style>
 </head>
 <body>
-  <!-- cursor glow -->
-  <div id="hoverGlow" class="hover-glow" style="background:radial-gradient(circle at 30% 30%, rgba(0,224,255,0.22), rgba(255,79,176,0.14) 45%, transparent 70%);"></div>
+  <div id="particles" aria-hidden="true"></div>
 
-  <header class="container">
-    <div class="brand">PradyumnTiwareNexus</div>
-    <nav><a href="#about">About</a><a href="#projects">Projects</a><a href="#tools">Tools</a><a href="#music">Music</a><a href="#contact">Contact</a></nav>
+  <header class="nav">
+    <div class="container">
+      <div class="brand">PradyumnTiwareNexus</div>
+      <nav>
+        <a href="#about">About</a>
+        <a href="#projects">Projects</a>
+        <a href="#tools">Tools</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
   </header>
 
-  <main class="container">
-    <section class="hero">
-      <!-- left profile -->
-      <aside class="card profile-card">
-        <div class="avatar-wrap">
-          <img id="avatarImg" class="avatar" src="assets/profile-circle.png" alt="PradyumnTiwareNexus avatar">
-          <div class="avatar-ring" aria-hidden="true"></div>
-        </div>
-        <div style="margin-top:12px">
-          <div class="profile-name">PradyumnTiwareNexus</div>
-          <div class="profile-sub">Cybersecurity Researcher • Bug Bounty • Recon Automation Developer</div>
-        </div>
-
-        <div class="btn-row">
-          <a class="btn" href="https://github.com/PradyumnTiwareNexus" target="_blank">View GitHub</a>
-          <a class="btn ghost" href="#projects">See Projects</a>
-        </div>
-
-        <div class="expert-grid">
-          <div class="expert-block">
-            <h4>Experience</h4>
-            <div style="font-weight:900;font-size:28px;color:var(--accent-a)">4.6 yrs</div>
-          </div>
-
-          <div class="expert-block">
-            <h4>Specialization</h4>
-            <div class="expert-list">
-              <div class="chip">Recon</div>
-              <div class="chip">JS Analysis</div>
-              <div class="chip">API Security</div>
-              <div class="chip">Bug Hunting</div>
-              <div class="chip">SOC / Threat</div>
+  <main>
+    <div class="container">
+      <section class="hero">
+        <div class="hero-grid">
+          <!-- left profile column -->
+          <aside class="card profile-card visible">
+            <div class="avatar-wrap">
+              <!-- use your uploaded circular avatar image as assets/profile-circle.png -->
+              <img src="assets/profile-circle.png" alt="PradyumnTiwareNexus" class="avatar"/>
             </div>
-          </div>
+            <h3 class="profile-name">PradyumnTiwareNexus</h3>
+            <p class="profile-sub">Cybersecurity Researcher • Bug Bounty • Recon Automation</p>
 
-          <div class="expert-block">
-            <h4>Programs</h4>
-            <div class="chip">Private + Public</div>
-            <h4 style="margin-top:10px">Practices</h4>
-            <div class="chip">Responsible</div>
-          </div>
-
-          <div class="expert-block">
-            <h4>Core Tools</h4>
-            <div class="expert-list">
-              <div class="chip">nmap</div>
-              <div class="chip">Burp Suite</div>
-              <div class="chip">Wireshark</div>
-              <div class="chip">Kali</div>
-              <div class="chip">Metasploit</div>
-              <div class="chip">VSCode</div>
+            <div class="stat-row">
+              <div class="stat">
+                <div class="stat-value" id="visits">--</div>
+                <div class="stat-label">Profile visits</div>
+              </div>
+              <div class="stat">
+                <div class="stat-value">3</div>
+                <div class="stat-label">Pinned projects</div>
+              </div>
             </div>
-          </div>
-        </div>
-      </aside>
 
-      <!-- right lead -->
-      <section class="card lead-card">
-        <h1>Hi — I'm <span style="color:var(--accent-b);font-weight:900">Pradyumn</span>. I hunt bugs & build recon tools.</h1>
-        <p>Creator of <strong>Recon Pipeline Enhanced v2.1</strong>. Focused on web security, OSINT and high-value bug hunting.</p>
+            <div style="margin-top:14px">
+              <a class="btn" href="https://github.com/PradyumnTiwareNexus" target="_blank">View GitHub</a>
+              <a class="btn ghost" href="#projects">See Projects</a>
+            </div>
+          </aside>
 
-        <div class="stats-grid" style="margin-top:12px">
-          <div class="stat">
-            <div class="big">4.6 <span style="font-size:14px;color:var(--muted);font-weight:700">yrs</span></div>
-            <div class="lbl">Experience</div>
-          </div>
-          <div class="stat">
-            <div style="font-weight:800">Recon • Bug Hunting • JS • API</div>
-            <div class="lbl">Specialization</div>
-          </div>
-        </div>
+          <!-- right lead column -->
+          <section class="card lead-card visible">
+            <h1>Hi — I'm <span class="accent">Pradyumn</span>. I hunt bugs & build recon tools.</h1>
+            <p class="muted">Creator of <strong>Recon Pipeline Enhanced v2.1</strong>. Focused on web security, OSINT and high-value bug hunting.</p>
 
-        <div style="margin-top:16px;color:var(--muted)">
-          <strong>Skills:</strong> HTML · C · C++ · Java · Bash · Python · JS · Nmap · Burp Suite · Wireshark · Kali
+            <div class="quick">
+              <strong>Skills:</strong> HTML · C · C++ · Java · Bash · Python · JS deep-inspection<br>
+              <strong>Tools:</strong> Burp Suite · Wireshark · Nmap · Metasploit · httpx · VSCode · Kali / Parrot
+            </div>
+          </section>
         </div>
       </section>
-    </section>
 
-    <!-- projects -->
-    <section id="projects" class="section">
-      <div class="card">
-        <h2>Featured Projects</h2>
-        <div class="projects">
-          <div class="project-card card" style="background:linear-gradient(180deg, rgba(0,0,0,0.02), rgba(0,0,0,0.04))">
-            <h3>Recon Pipeline Enhanced v2.1</h3>
-            <p style="color:var(--muted)">Automated recon: subdomains → httpx → JS → Wayback → secrets → nuclei targets.</p>
-            <p><a href="https://github.com/PradyumnTiwareNexus/recon_pipeline_enhanced" target="_blank">Repository →</a></p>
-          </div>
-          <div class="project-card card">
-            <h3>Other Tool / Writeup</h3>
-            <p style="color:var(--muted)">Example writeups and smaller tooling. Replace or add your repos.</p>
-          </div>
-        </div>
-      </div>
-    </section>
+      <!-- About -->
+      <section id="about" class="section">
+        <div class="card visible about-grid">
+          <div class="about-left">
+            <h2>About</h2>
+            <p>
+              I’m <strong>Pradyumn Tiware</strong>, a Cybersecurity Researcher, Bug Bounty Hunter, and Recon Automation Developer.
+              I build intelligent recon pipelines combining OSINT, automation, and deep archive analysis to find high-impact vulnerabilities.
+              I work ethically and focus on quality findings for private & public programs.
+            </p>
 
-    <!-- tools / tech -->
-    <section id="tools" class="section">
-      <div class="card">
-        <h2>Tools & Tech (Expert)</h2>
-        <div class="tools-grid">
-          <div class="tool-card">
-            <div class="icon">🖥️</div>
-            <div>VSCode</div>
+            <h3 style="margin-top:12px">My areas of focus:</h3>
+            <ul style="color:#cfeff8; line-height:1.6">
+              <li>🔎 Recon automation & tooling (subdomains, wayback, JS, API)</li>
+              <li>🛡️ Web exploitation & endpoint analysis</li>
+              <li>🧩 JavaScript deep-inspection & secret detection</li>
+              <li>🌐 Asset discovery & attack-surface expansion</li>
+              <li>🔑 API security & authentication analysis</li>
+              <li>🗂️ Historical archive (CDX) analysis</li>
+              <li>🛰️ SOC-style log review & threat hunting</li>
+              <li>🤝 Responsible disclosure & research collaboration</li>
+            </ul>
           </div>
-          <div class="tool-card">
-            <div class="icon">🔍</div>
-            <div>nmap</div>
-          </div>
-          <div class="tool-card">
-            <div class="icon">🛡️</div>
-            <div>Burp Suite</div>
-          </div>
-          <div class="tool-card">
-            <div class="icon">🌐</div>
-            <div>Wireshark</div>
-          </div>
-          <div class="tool-card">
-            <div class="icon">🐧</div>
-            <div>Kali Linux</div>
-          </div>
-          <div class="tool-card">
-            <div class="icon">🧰</div>
-            <div>Metasploit</div>
-          </div>
-          <div class="tool-card">
-            <div class="icon">📡</div>
-            <div>httpx</div>
-          </div>
-          <div class="tool-card">
-            <div class="icon">🧩</div>
-            <div>Amass / Subfinder</div>
-          </div>
-          <div class="tool-card">
-            <div class="icon">📜</div>
-            <div>Wayback / CDX</div>
-          </div>
-        </div>
-      </div>
-    </section>
 
-    <!-- music -->
-    <section id="music" class="section">
-      <div class="card music-card">
-        <h2>Focus Music</h2>
-        <div class="player">
-          <div id="playlist" class="playlist" aria-live="polite"></div>
-          <div class="controls" style="display:flex;flex-direction:column;gap:10px;align-items:flex-end">
-            <div style="display:flex;gap:8px">
-              <button id="prev">⏮</button>
-              <button id="play">▶</button>
-              <button id="next">⏭</button>
+          <aside class="about-right">
+            <div class="info-box">
+              <div class="mut">Experience</div>
+              <div style="font-size:28px; margin-top:6px; color:var(--accent1); font-weight:900">4.6 yrs</div>
             </div>
-            <div style="color:var(--muted);font-size:13px"><span id="cur">0:00</span> / <span id="dur">0:00</span></div>
+
+            <div class="info-box">
+              <div class="mut">Specialization</div>
+              <div style="margin-top:8px; font-weight:900; color:#fff">Recon • Bug Hunting • JS • API • SOC</div>
+            </div>
+
+            <div class="info-box">
+              <div class="mut">Programs</div>
+              <div style="margin-top:8px; font-weight:800">Private + Public</div>
+            </div>
+
+            <div class="info-box">
+              <div class="mut">Practices</div>
+              <div style="margin-top:8px; font-weight:800">Responsible Disclosure</div>
+            </div>
+
+            <div style="grid-column:1/-1; display:flex; flex-wrap:wrap; margin-top:8px;">
+              <div class="skill-pill">💻 HTML</div>
+              <div class="skill-pill">⚙️ C / C++</div>
+              <div class="skill-pill">☕ Java</div>
+              <div class="skill-pill">🐧 Wireshark</div>
+              <div class="skill-pill">🛡️ Burp Suite</div>
+              <div class="skill-pill">🔍 Nmap</div>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <!-- Tools & Tech -->
+      <section id="tools" class="section">
+        <div class="card visible">
+          <div class="tools-container">
+            <div class="tools-title">Tools & Tech</div>
+            <div class="tools-pills">
+              <div class="tool-pill big" title="Burp Suite">
+                <span class="pill-icon">🛡️</span> Burp Suite
+              </div>
+
+              <div class="tool-pill" title="Wireshark">
+                <span class="pill-icon">🌊</span> Wireshark
+              </div>
+
+              <div class="tool-pill" title="Nmap">
+                <span class="pill-icon">🔎</span> Nmap
+              </div>
+
+              <div class="tool-pill" title="Metasploit">
+                <span class="pill-icon">🧰</span> Metasploit
+              </div>
+
+              <div class="tool-pill" title="httpx">
+                <span class="pill-icon">🧩</span> httpx
+              </div>
+
+              <div class="tool-pill" title="Recon scripts">
+                <span class="pill-icon">📜</span> Recon scripts
+              </div>
+
+              <div class="tool-pill" title="Kali / Parrot">
+                <span class="pill-icon">🐧</span> Kali / Parrot
+              </div>
+
+              <div class="tool-pill" title="VSCode">
+                <span class="pill-icon">💻</span> VSCode
+              </div>
+
+              <div class="tool-pill" title="WireShark/Burp plugins">
+                <span class="pill-icon">🔧</span> Burp Exts / Plugins
+              </div>
+            </div>
           </div>
         </div>
-        <p style="color:var(--muted);margin-top:10px">Upload MP3s to <code>assets/audio/focus1.mp3</code> etc. — player will auto-detect.</p>
-      </div>
-    </section>
+      </section>
 
-    <!-- contact -->
-    <section id="contact" class="section">
-      <div class="card">
-        <h2>Contact</h2>
-        <form id="contactForm" class="contact-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
-          <label>Name<input name="name" required></label>
-          <label>Email<input type="email" name="email" required></label>
-          <label>Message<textarea name="message" rows="5" required></textarea></label>
-          <div style="margin-top:8px">
-            <button class="btn" type="submit">Send</button>
+      <!-- Projects -->
+      <section id="projects" class="section">
+        <div class="card visible">
+          <h2>Featured Projects</h2>
+          <div class="cards">
+            <article class="card project">
+              <h3>Recon Pipeline Enhanced v2.1</h3>
+              <p>Automated recon: subdomains → httpx → JS → Wayback → secrets → nuclei targets.</p>
+              <p><a href="https://github.com/PradyumnTiwareNexus/recon_pipeline_enhanced" target="_blank">Repository →</a></p>
+            </article>
+
+            <article class="card project">
+              <h3>Other Tools & Writeups</h3>
+              <p>Tooling, writeups and research notes related to JS analysis and wayback hunting.</p>
+              <p><a href="https://github.com/PradyumnTiwareNexus" target="_blank">View all →</a></p>
+            </article>
           </div>
-        </form>
-        <p style="color:var(--muted);margin-top:12px;font-size:13px">Responsible disclosure only. Use vendor bounty programs for testing.</p>
-      </div>
-    </section>
+        </div>
+      </section>
 
-    <footer style="margin-top:18px;text-align:center;color:var(--muted)">
-      © 2025 Pradyumn Tiware — Stay Ethical • Stay Sharp
-    </footer>
+      <!-- Music & Contact / small player -->
+      <section class="section">
+        <div class="card visible music-card">
+          <div style="flex:1">
+            <h2 style="margin:0 0 6px">Music & Mood</h2>
+            <p style="color:var(--muted); margin:0 0 8px">A small playlist to keep focused while reconning.</p>
 
+            <div class="player">
+              <div class="playlist">
+                <div style="display:flex; gap:8px; align-items:center">
+                  <button id="playBtn" class="play-btn">Play</button>
+                  <select id="trackList" style="padding:8px;border-radius:8px;background:transparent;color:#e7fbff;border:1px solid rgba(255,255,255,0.04)">
+                    <option value="assets/music1.mp3">Working Energy — Kinhbach</option>
+                    <option value="assets/music2.mp3">Focus Loop — Instrumental</option>
+                    <option value="assets/music3.mp3">LoFi Hack — Chill</option>
+                  </select>
+                </div>
+                <div id="currentTrack" style="color:var(--muted); margin-top:8px">Stopped</div>
+              </div>
+              <div style="margin-left:auto; min-width:120px; text-align:right">
+                <small style="color:var(--muted)">Tip: mute if you are recording PoC videos</small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Contact -->
+      <section id="contact" class="section">
+        <div class="card visible" style="display:flex; gap:20px; flex-wrap:wrap">
+          <div style="flex:1 1 460px">
+            <h2>Contact</h2>
+            <p style="color:var(--muted)">Responsible disclosure only — please use vendor bounty programs or contact via email for coordination.</p>
+
+            <!-- Formspree: replace action with your endpoint -->
+            <form class="contact" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+              <input type="text" name="name" placeholder="Your name" required style="padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.03);background:transparent;color:#e7fbff">
+              <input type="email" name="_replyto" placeholder="Your email" required style="padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.03);background:transparent;color:#e7fbff">
+              <textarea name="message" rows="5" placeholder="Brief description (program, scope...)" required style="padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.03);background:transparent;color:#e7fbff"></textarea>
+              <button class="btn" type="submit">Send</button>
+            </form>
+          </div>
+
+          <aside style="width:260px">
+            <h3 style="margin-top:6px">Quick Links</h3>
+            <ul class="contact-list" style="list-style:none; padding:0; margin:8px 0 0">
+              <li>Email: <a href="mailto:your-email@example.com">your-email@example.com</a></li>
+              <li>GitHub: <a href="https://github.com/PradyumnTiwareNexus" target="_blank">PradyumnTiwareNexus</a></li>
+              <li>X: <a href="https://x.com/yourhandle" target="_blank">@yourhandle</a></li>
+            </ul>
+          </aside>
+        </div>
+      </section>
+
+    </div>
   </main>
 
-<script>
-/* =========== Cursor hover glow =========== */
-(function(){
-  const g = document.getElementById('hoverGlow');
-  if(!g) return;
-  g.style.display = 'block';
-  document.addEventListener('mousemove', (e)=>{
-    g.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
-  });
-  document.addEventListener('touchstart', ()=> g.style.display='none');
-})();
+  <footer>
+    <div class="container">
+      <div>© 2025 Pradyumn Tiware — Stay Ethical • Stay Sharp</div>
+    </div>
+  </footer>
 
-/* =========== Music player (simple) =========== */
-(function(){
-  const list = [
-    {title:'Focus 1', src:'assets/audio/focus1.mp3'},
-    {title:'Focus 2', src:'assets/audio/focus2.mp3'},
-    {title:'Focus 3', src:'assets/audio/focus3.mp3'}
-  ];
-  const playlistEl = document.getElementById('playlist');
-  const audio = new Audio();
-  let idx = 0, playing=false;
-
-  function render(){
-    playlistEl.innerHTML='';
-    list.forEach((t,i)=>{
-      const tr = document.createElement('div');
-      tr.className = 'track' + (i===idx && !audio.paused ? ' playing' : '');
-      tr.innerHTML = `<div>${t.title}</div><div style="opacity:.8">${i+1}</div>`;
-      tr.onclick = ()=> play(i);
-      playlistEl.appendChild(tr);
+  <!-- JavaScript: small animations, visitor counter, music player, hover glow -->
+  <script>
+    // reveal cards on load
+    document.addEventListener('DOMContentLoaded', function(){
+      document.querySelectorAll('.card').forEach((c,i)=> setTimeout(()=> c.classList.add('visible'), 120*i));
     });
-  }
 
-  function play(i){
-    idx = (typeof i==='number')?i:idx;
-    audio.src = list[idx].src;
-    audio.play().catch(()=>{});
-    document.getElementById('play').textContent = '⏸';
-    playing = true;
-    render();
-  }
+    // CountAPI visitor counter - will show number in #visits
+    (function(){
+      const key = 'portfolio_visits';
+      fetch('https://api.countapi.xyz/hit/pradyumntiware/' + key)
+        .then(r=>r.json())
+        .then(j=>{
+          if(j && j.value!==undefined){
+            const el=document.getElementById('visits');
+            if(el) el.innerText = j.value.toLocaleString();
+          }
+        }).catch(()=>{});
+    })();
 
-  document.getElementById('play').addEventListener('click', ()=>{
-    if(!audio.src){ play(0); return; }
-    if(audio.paused){ audio.play(); document.getElementById('play').textContent='⏸'; }
-    else { audio.pause(); document.getElementById('play').textContent='▶'; }
-  });
-  document.getElementById('next').addEventListener('click', ()=> { idx = (idx+1)%list.length; play(idx); });
-  document.getElementById('prev').addEventListener('click', ()=> { idx = (idx-1+list.length)%list.length; play(idx); });
+    // tiny glow under hovered pill
+    (function(){
+      const glow = document.createElement('div');
+      glow.style.position = 'fixed';
+      glow.style.pointerEvents='none';
+      glow.style.width='160px';
+      glow.style.height='64px';
+      glow.style.borderRadius='20px';
+      glow.style.background = 'radial-gradient(closest-side, rgba(25,225,255,0.12), rgba(255,79,176,0.06), transparent 70%)';
+      glow.style.transition='transform .12s ease, opacity .12s ease, left .06s ease, top .06s ease';
+      glow.style.opacity='0';
+      glow.style.zIndex='9998';
+      document.body.appendChild(glow);
 
-  audio.addEventListener('timeupdate', ()=>{
-    document.getElementById('cur').textContent = format(audio.currentTime);
-    document.getElementById('dur').textContent = isNaN(audio.duration)?'0:00':format(audio.duration);
-  });
-  audio.addEventListener('ended', ()=> { idx=(idx+1)%list.length; play(idx); });
+      document.querySelectorAll('.tool-pill').forEach(el=>{
+        el.addEventListener('mouseenter', e=>{
+          const r = el.getBoundingClientRect();
+          glow.style.left = (r.left + r.width/2 - 80) + 'px';
+          glow.style.top = (r.top + r.height/2 - 32) + 'px';
+          glow.style.opacity = '1';
+          glow.style.transform = 'scale(1.02)';
+        });
+        el.addEventListener('mouseleave', ()=> {
+          glow.style.opacity = '0';
+          glow.style.transform = 'scale(.9)';
+        });
+      });
+    })();
 
-  function format(s){ if(!s) return '0:00'; const m=Math.floor(s/60), sec=Math.floor(s%60); return m+':'+(sec<10?'0'+sec:sec); }
-  render();
-})();
+    // simple music player (local files in assets/ — use your mp3s)
+    (function(){
+      const audio = new Audio();
+      const playBtn = document.getElementById('playBtn');
+      const trackList = document.getElementById('trackList');
+      const current = document.getElementById('currentTrack');
 
-/* =========== Parallax subtle on project cards =========== */
-(function(){
-  const cards = document.querySelectorAll('.project-card');
-  cards.forEach(card=>{
-    card.addEventListener('mousemove', (e)=>{
-      const r = card.getBoundingClientRect();
-      const x = (e.clientX - r.left)/r.width - 0.5;
-      const y = (e.clientY - r.top)/r.height - 0.5;
-      card.style.transform = `translateY(-8px) rotateX(${(-y*6).toFixed(2)}deg) rotateY(${(x*6).toFixed(2)}deg)`;
-    });
-    card.addEventListener('mouseleave', ()=> card.style.transform='');
-  });
-})();
+      function setTrack(url){
+        audio.src = url;
+        audio.load();
+        current.innerText = 'Loaded: ' + trackList.options[trackList.selectedIndex].text;
+      }
 
-/* =========== Simple hit counter (CountAPI) =========== */
-(function(){
-  fetch('https://api.countapi.xyz/hit/pradyumntiware/portfolio_v5')
-    .then(r=>r.json()).then(j=>{ console.log('visits', j.value); }).catch(()=>{});
-})();
+      trackList.addEventListener('change', ()=> setTrack(trackList.value));
+      setTrack(trackList.value);
 
-/* =========== Small convenience: show avatar fallback if missing =========== */
-(function(){
-  const img = document.getElementById('avatarImg');
-  img.addEventListener('error', ()=> {
-    // fallback: create initials circle
-    const wrap = img.parentElement;
-    img.style.display='none';
-    const c = document.createElement('div');
-    c.style.width='180px'; c.style.height='180px'; c.style.borderRadius='50%';
-    c.style.display='flex'; c.style.alignItems='center'; c.style.justifyContent='center';
-    c.style.background='linear-gradient(180deg,var(--accent-a),var(--accent-b))';
-    c.style.color='#001'; c.style.fontWeight='900'; c.style.fontSize='36px';
-    c.textContent = 'PTN';
-    wrap.appendChild(c);
-  });
-})();
-</script>
+      playBtn.addEventListener('click', function(){
+        if(audio.paused){
+          audio.play().catch(()=>{});
+          playBtn.innerText = 'Pause';
+        } else {
+          audio.pause();
+          playBtn.innerText = 'Play';
+        }
+      });
+
+      audio.addEventListener('ended', ()=> playBtn.innerText = 'Play');
+      audio.addEventListener('play', ()=> current.innerText = 'Playing: ' + trackList.options[trackList.selectedIndex].text);
+      audio.addEventListener('pause', ()=> current.innerText = 'Paused');
+    })();
+  </script>
+
 </body>
 </html>
