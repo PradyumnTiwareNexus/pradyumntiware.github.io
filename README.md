@@ -1,3 +1,3 @@
-# Pradyumn Portfolio v3
+# Pradyumn Portfolio v4
 
-Blue glass theme, hover-lift to front, avatar included.
+Glass-blue theme, hover-glow effects, avatar included. Replace contact form backend as needed.

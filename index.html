@@ -4,6 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>Pradyumn Tiware Nexus — Cybersecurity Researcher</title>
+<meta name="description" content="Pradyumn Tiware — Cybersecurity Researcher, Bug Bounty Hunter, Recon Automation Developer" />
 <link rel="icon" href="assets/favicon.png" />
 <link rel="stylesheet" href="styles.css" />
 </head>
@@ -22,21 +23,28 @@
 <main>
   <section class="hero">
     <div class="container hero-grid">
-      <aside class="card profile-card hover-lift">
+      <aside class="card profile-card hover-lift" data-hover>
         <div class="avatar-wrap">
           <img src="assets/profile-circle.png" alt="PradyumnTiwareNexus" class="avatar"/>
+          <div class="avatar-ring"></div>
         </div>
         <h3 class="profile-name">PradyumnTiwareNexus</h3>
         <p class="profile-sub">Cybersecurity Researcher • Bug Bounty • Recon Automation</p>
+        <div class="tool-badges">
+          <span class="badge">Nmap</span>
+          <span class="badge">Burp Suite</span>
+          <span class="badge">Wireshark</span>
+          <span class="badge">Metasploit</span>
+        </div>
         <div class="cta-row">
           <a class="btn" href="https://github.com/PradyumnTiwareNexus" target="_blank">View GitHub</a>
           <a class="btn ghost" href="#projects">See Projects</a>
         </div>
       </aside>
 
-      <section class="card lead-card hover-lift">
+      <section class="card lead-card hover-lift" data-hover>
         <h1 class="hero-title">Hi — I'm <span class="accent">Pradyumn</span>. I hunt bugs & build recon tools.</h1>
-        <p class="muted">Creator of Recon Pipeline Enhanced v2.1. Focused on web security, OSINT and high-value bug hunting.</p>
+        <p class="muted">Creator of <strong>Recon Pipeline Enhanced v2.1</strong>. Focused on web security, OSINT and high-value bug hunting.</p>
         <div class="quick">
           <strong>Core:</strong> Recon • JS Analysis • API Security • SOC Detection
         </div>
@@ -45,53 +53,56 @@
   </section>
 
   <section id="about" class="section">
-    <div class="container card about-card hover-lift">
-      <div class="about-grid">
-        <div class="about-left">
-          <h2>About Me</h2>
-          <p>I’m <strong>Pradyumn Tiware</strong> — Cybersecurity Researcher, Bug Bounty Hunter and Recon Automation Developer.
-          I design automated pipelines and tooling to find high-impact vulnerabilities across web platforms and APIs.</p>
-          <ul>
-            <li>Recon automation & tooling (subdomains, Wayback, JS, API)</li>
-            <li>Web exploitation & endpoint analysis</li>
-            <li>JavaScript deep-inspection & secret detection</li>
-            <li>API security & authentication analysis</li>
-            <li>SOC-style log review & threat hunting</li>
-          </ul>
-        </div>
+    <div class="container about-wrap">
+      <div class="about-left card hover-lift" data-hover>
+        <h2>About Me</h2>
+        <p>I'm <strong>Pradyumn Tiware</strong> — a Cybersecurity Researcher, Bug Bounty Hunter, and Recon Automation Developer. I design automated pipelines and tooling to find high-impact vulnerabilities across web platforms and APIs. I also perform SOC-style log analysis and threat hunting for private engagements.</p>
+        <ul class="focus-list">
+          <li>Recon automation & tooling (subdomains, Wayback, JS, API)</li>
+          <li>Web exploitation & endpoint analysis</li>
+          <li>JavaScript deep-inspection & secret detection</li>
+          <li>API security & authentication analysis</li>
+          <li>SOC-style log review & threat hunting</li>
+        </ul>
+      </div>
 
-        <aside class="about-right">
-          <div class="glass-stats">
-            <div class="stat-item big">
-              <div class="stat-label">Experience</div>
-              <div class="stat-value big-val">4.6 <span class="stat-small">yrs</span></div>
+      <aside class="about-right">
+        <div class="glass-stats card hover-lift" data-hover>
+          <div class="stat-grid">
+            <div class="stat-item stat-large" data-hoverable>
+              <div class="label">Experience</div>
+              <div class="value">4.6 <span class="yrs">yrs</span></div>
             </div>
-            <div class="stat-item">
-              <div class="stat-label">Specialization</div>
-              <div class="stat-value">Recon • Bug Hunting • JS • API • SOC</div>
+            <div class="stat-item" data-hoverable>
+              <div class="label">Specialization</div>
+              <div class="value">Recon • Bug Hunting • JS • API • SOC</div>
             </div>
-            <div class="stat-item">
-              <div class="stat-label">Programs</div>
-              <div class="stat-value">Private + Public</div>
+            <div class="stat-item" data-hoverable>
+              <div class="label">Programs</div>
+              <div class="value">Private + Public</div>
             </div>
-            <div class="stat-item">
-              <div class="stat-label">Practices</div>
-              <div class="stat-value">Responsible</div>
+            <div class="stat-item" data-hoverable>
+              <div class="label">Practices</div>
+              <div class="value">Responsible</div>
             </div>
           </div>
-        </aside>
-      </div>
+
+          <div class="skill-pills">
+            <span>HTML</span><span>C / C++</span><span>Java</span><span>Wireshark</span><span>Burp</span><span>Nmap</span>
+          </div>
+        </div>
+      </aside>
     </div>
   </section>
 
-  <section id="projects" class="section dark">
-    <div class="container card hover-lift">
+  <section id="projects" class="section">
+    <div class="container card hover-lift" data-hover>
       <h2>Featured Projects</h2>
       <div class="project-row">
         <div class="project-card">
           <div class="project-inner">
             <h3>Recon Pipeline Enhanced v2.1</h3>
-            <p>Automated recon pipeline for high-value targets.</p>
+            <p>Automated recon pipeline: subdomains → httpx → JS → Wayback → secrets → nuclei targets.</p>
             <a href="https://github.com/PradyumnTiwareNexus/recon_pipeline_enhanced" target="_blank">Repository</a>
           </div>
         </div>
@@ -99,14 +110,27 @@
     </div>
   </section>
 
+  <section id="music" class="section">
+    <div class="container card hover-lift" data-hover>
+      <h2>Music & Mood</h2>
+      <!-- placeholder Spotify embed, user can replace with playlist URI -->
+      <iframe src="https://open.spotify.com/embed/playlist/37i9dQZF1DXcBWIGoYBM5M" width="100%" height="120" style="border-radius:12px;border:0;overflow:hidden" allow="encrypted-media"></iframe>
+    </div>
+  </section>
+
   <section id="contact" class="section">
-    <div class="container card hover-lift">
+    <div class="container card hover-lift" data-hover>
       <h2>Contact</h2>
       <p>Responsible disclosure only — please use vendor bounty programs or email for coordination.</p>
-      <ul class="contact-list">
-        <li>Email: <a href="mailto:your-email@example.com">your-email@example.com</a></li>
-        <li>GitHub: <a href="https://github.com/PradyumnTiwareNexus" target="_blank">PradyumnTiwareNexus</a></li>
-      </ul>
+      <form id="contact-form" class="contact-form" onsubmit="handleContact(event)">
+        <label>Name<input type="text" id="cf-name" required></label>
+        <label>Email<input type="email" id="cf-email" required></label>
+        <label>Message<textarea id="cf-msg" rows="4" required></textarea></label>
+        <div class="form-actions">
+          <button type="submit" class="btn">Send (test)</button>
+        </div>
+        <p class="muted">This is a front-end demo form — replace action with your email provider or form backend.</p>
+      </form>
     </div>
   </section>
 
@@ -120,11 +144,29 @@
 </footer>
 
 <script>
-// bring hovered card to front
-document.querySelectorAll('.hover-lift').forEach(el=>{
+// bring hovered card to front and add glow based on cursor
+document.querySelectorAll('[data-hover]').forEach(el=>{
   el.addEventListener('mouseenter', ()=> el.classList.add('lifted'));
   el.addEventListener('mouseleave', ()=> el.classList.remove('lifted'));
+  // add mousemove glow effect for children with data-hoverable
+  el.addEventListener('mousemove', (e)=>{
+    const rect = el.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    el.style.setProperty('--mx', x + 'px');
+    el.style.setProperty('--my', y + 'px');
+  });
 });
+
+// contact form demo handler
+function handleContact(e){
+  e.preventDefault();
+  const name = document.getElementById('cf-name').value;
+  const email = document.getElementById('cf-email').value;
+  const msg = document.getElementById('cf-msg').value;
+  alert('Demo form submitted.\n' + name + ' — ' + email + '\nMessage length: ' + msg.length + ' chars.\nReplace with real backend to send emails.');
+  document.getElementById('contact-form').reset();
+}
 </script>
 </body>
 </html>
