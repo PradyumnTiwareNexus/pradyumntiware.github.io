@@ -21,7 +21,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
 
   <!-- Stylesheet -->
-
+  <style>
     :root{
       --bg:#041217;
       --bg-2:#06121a;
@@ -136,7 +136,6 @@
       backdrop-filter: blur(6px);
     }
     .project-card:hover{transform:translateY(-8px);box-shadow:0 30px 60px rgba(0,0,0,0.25)}
-    /* on click show elevation + glow */
     .project-card.active{transform:translateY(-14px);box-shadow:0 40px 90px rgba(0,0,0,0.45); border-color: rgba(45,225,230,0.12)}
     .project-card.glow::after{ content:''; position:absolute; inset:-6px; border-radius:16px; pointer-events:none; box-shadow: 0 8px 48px rgba(45,225,230,0.08), 0 6px 24px rgba(255,90,140,0.06); opacity:1; transition:opacity .28s ease; }
     .project-thumb{height:110px;border-radius:8px;background:linear-gradient(135deg,var(--accent1),var(--accent2));display:flex;align-items:center;justify-content:center;color:#042223;font-weight:800}
@@ -400,7 +399,6 @@
           <div class="card" style="padding:22px">
             <h2>Featured Case Study</h2>
             <p style="color:var(--muted)">A short walkthrough of a recon-to-report workflow (click project to view details).</p>
-            <!-- space kept intentionally under the featured case study -->
             <div style="height:120px"></div>
           </div>
 
