@@ -79,15 +79,61 @@
     /* contact */
     .contact-form input,.contact-form textarea,.contact-form select{width:100%;padding:12px;border-radius:10px;background:transparent;border:1px solid rgba(255,255,255,0.04);color:var(--muted);margin-bottom:12px}
     .contact-form button{width:100%;padding:12px;border-radius:12px;background:linear-gradient(90deg,var(--accent1),var(--accent2));border:none;color:#021418;font-weight:800}
-    /* custom cursor */
-    .cursor {position:fixed;left:0;top:0;width:14px;height:14px;border-radius:50%;pointer-events:none;z-index:9999;background:linear-gradient(90deg,var(--accent2),var(--accent1));box-shadow:0 8px 24px rgba(45,225,230,0.18);transform:translate(-50%,-50%);transition:transform .12s ease, width .12s ease, height .12s ease}
-    .cursor.ripple {position:fixed;left:0;top:0;width:72px;height:72px;border-radius:50%;pointer-events:none;z-index:9998;border:2px dashed rgba(255,255,255,0.04);transform:translate(-50%,-50%);opacity:0;transition:opacity .2s ease}
+    /* custom cursor (desktop) */
+    /* NOTE: add a file at assets/cursor-game.png (recommended 48x48 PNG) for custom pointer */
+    #cursor {
+      position:fixed;
+      left:0;top:0;
+      width:28px;height:28px;border-radius:50%;
+      pointer-events:none;z-index:9999;
+      transform:translate(-50%,-50%);
+      transition:transform .08s ease, width .12s ease, height .12s ease, opacity .12s ease;
+      background-repeat:no-repeat;
+      background-position:center;
+      background-size:contain;
+      /* try to use an image for the visible cursor; fallback below */
+      background-image: url('assets/cursor-game.png');
+      box-shadow:0 8px 24px rgba(45,225,230,0.18);
+      opacity:1;
+    }
+    #ripple {
+      position:fixed;left:0;top:0;width:72px;height:72px;border-radius:50%;pointer-events:none;z-index:9998;
+      border:2px dashed rgba(255,255,255,0.04);transform:translate(-50%,-50%) scale(1);opacity:0;transition:opacity .2s ease, transform .28s ease;
+    }
+    /* fallback visible dot if image not present: create small inner circle */
+    #cursor.fallback {
+      background-image: none;
+      background-color: transparent;
+      box-shadow: none;
+    }
+    #cursor.fallback::after {
+      content:"";display:block;width:10px;height:10px;border-radius:50%;background:linear-gradient(90deg,var(--accent2),var(--accent1));
+      transform:translate(50%,50%);
+    }
+    /* when hovering interactive elements enlarge */
+    .cursor-large { transform:translate(-50%,-50%) scale(1.9); width:44px;height:44px; }
+    .ripple-show { opacity:1; transform:translate(-50%,-50%) scale(1.05); }
+
+    /* custom pointer CSS for classic cursor fallback on desktop (also helps when image fails) */
+    @media (pointer: fine) {
+      /* set native cursor to custom image (if supported) as extra fallback */
+      body { cursor: url('assets/cursor-game.png') 16 16, auto; }
+    }
+
+    /* hide custom cursor on touch devices (mobile) for better UX */
+    @media (pointer: coarse), (hover: none) {
+      #cursor, #ripple { display:none !important; }
+      body { cursor: default; } /* use system touch cursor */
+    }
+
     /* utilities */
     .row{display:flex;gap:12px;align-items:center}
     footer.footer{padding:24px 0;color:var(--muted);text-align:center;font-size:13px}
     /* responsive */
     @media (max-width:980px){
       .hero-grid{grid-template-columns:1fr;gap:16px}
+      /* Ensure profile-photo block appears first on stacked layout */
+      .profile-card{order:-1}
       .about-grid{grid-template-columns:1fr}
       .tools-grid{grid-template-columns:1fr}
       .avatar-wrap{width:150px;height:150px}
@@ -95,8 +141,9 @@
   </style>
 </head>
 <body>
-  <div id="cursor" class="cursor"></div>
-  <div id="ripple" class="cursor ripple"></div>
+  <!-- Custom cursor elements (desktop only) -->
+  <div id="cursor" class=""></div>
+  <div id="ripple"></div>
 
   <div class="container">
     <header class="nav">
@@ -107,7 +154,7 @@
       <section class="hero">
         <div class="hero-grid">
           <!-- profile -->
-          <aside class="card profile-card">
+          <aside class="card profile-card" id="profileCard">
             <div class="avatar-wrap">
               <!-- make sure this image exists at assets/profile-circle.png -->
               <img src="assets/profile-circle.png" alt="PradyumnTiwareNexus" class="avatar" id="avatar-img"/>
@@ -133,7 +180,7 @@
           </aside>
 
           <!-- lead -->
-          <section class="card lead-card">
+          <section class="card lead-card" id="leadCard">
             <h1>Hi — I'm <span class="accent">Pradyumn</span>. I hunt bugs & build recon tools.</h1>
             <p class="muted">Creator of <strong>Recon Pipeline Enhanced v2.1</strong>. Focused on web security, OSINT and high-value bug hunting.</p>
             <div class="quick">
@@ -291,29 +338,52 @@
   </div>
 
   <script>
-    // Custom cursor
+    // -------------------------------
+    // Custom cursor behaviour (desktop)
+    // -------------------------------
     const cursor = document.getElementById('cursor');
     const ripple = document.getElementById('ripple');
-    document.addEventListener('mousemove', e=>{
-      cursor.style.left = e.clientX + 'px';
-      cursor.style.top = e.clientY + 'px';
-      ripple.style.left = e.clientX + 'px';
-      ripple.style.top = e.clientY + 'px';
-    });
-    // ripple on click
-    document.addEventListener('mousedown', ()=>{
-      ripple.style.opacity = 1;
-      ripple.style.transform = 'translate(-50%,-50%) scale(1)';
-      setTimeout(()=> ripple.style.opacity = 0, 300);
-    });
 
-    // hover enlarge cursor over interactive items
-    document.querySelectorAll('a,button,input,select,textarea,.tool,.chip').forEach(el=>{
-      el.addEventListener('mouseenter', ()=> { cursor.style.transform='translate(-50%,-50%) scale(1.8)'; })
-      el.addEventListener('mouseleave', ()=> { cursor.style.transform='translate(-50%,-50%) scale(1)'; })
-    });
+    // detect if custom cursor image loads; if not, fallback to colored dot
+    function checkCursorImage() {
+      const img = new Image();
+      img.onload = () => {
+        // image exists — nothing else needed (background-image uses it)
+      };
+      img.onerror = () => {
+        cursor.classList.add('fallback');
+      };
+      img.src = 'assets/cursor-game.png';
+    }
+    // run check only if device likely has fine pointer
+    if (window.matchMedia && window.matchMedia('(pointer: fine)').matches) {
+      checkCursorImage();
+      document.addEventListener('mousemove', e=>{
+        cursor.style.left = e.clientX + 'px';
+        cursor.style.top = e.clientY + 'px';
+        ripple.style.left = e.clientX + 'px';
+        ripple.style.top = e.clientY + 'px';
+      });
+      // ripple on mouse down
+      document.addEventListener('mousedown', ()=> {
+        ripple.classList.add('ripple-show');
+        setTimeout(()=> ripple.classList.remove('ripple-show'), 300);
+      });
 
+      // hover enlarge cursor over interactive items
+      document.querySelectorAll('a,button,input,select,textarea,.tool,.chip').forEach(el=>{
+        el.addEventListener('mouseenter', ()=> { cursor.classList.add('cursor-large'); });
+        el.addEventListener('mouseleave', ()=> { cursor.classList.remove('cursor-large'); });
+      });
+    } else {
+      // touchscreen devices: hide custom elements (CSS already hides them), but ensure default pointer
+      cursor.style.display = 'none';
+      ripple.style.display = 'none';
+    }
+
+    // -------------------------------
     // CountAPI visitor counter (optional)
+    // -------------------------------
     (function(){
       const el = document.getElementById('visits');
       if(!el) return;
@@ -322,7 +392,9 @@
       }).catch(()=>{ el.innerText='--'; });
     })();
 
+    // -------------------------------
     // audio player
+    // -------------------------------
     const audio = document.getElementById('audio');
     const playBtn = document.getElementById('playBtn');
     const trackSelect = document.getElementById('trackSelect');
@@ -340,15 +412,28 @@
 
     // Contact form: brief submit handler (Formspree default will handle)
     document.getElementById('contactForm').addEventListener('submit', function(e){
-      // let Formspree handle submission - we can show a quick UI
       setTimeout(()=> alert('Thanks — message submitted (Formspree will forward).'), 300);
     });
 
-    // small accessibility: if avatar fails to load, replace with initials ring
+    // avatar fallback
     document.getElementById('avatar-img').addEventListener('error', function(){
       this.src = 'data:image/svg+xml;utf8,' + encodeURIComponent(
         `<svg xmlns="http://www.w3.org/2000/svg" width="320" height="320"><rect width="100%" height="100%" rx="20" fill="#0b1113"/><text x="50%" y="52%" fill="#bff9fa" font-size="72" font-family="Montserrat" font-weight="800" text-anchor="middle" alignment-baseline="middle">PTN</text></svg>`
       );
+    });
+
+    // Ensure hero photo/profile is visible on page load (scroll to top of hero)
+    window.addEventListener('load', () => {
+      // small delay to ensure CSS stacking is applied on mobiles
+      setTimeout(() => {
+        const hero = document.querySelector('.hero');
+        if (hero) {
+          // scroll to top of hero (only if user didn't come from an anchor)
+          if (!location.hash) {
+            hero.scrollIntoView({behavior: 'instant', block: 'start'});
+          }
+        }
+      }, 120);
     });
   </script>
 </body>
