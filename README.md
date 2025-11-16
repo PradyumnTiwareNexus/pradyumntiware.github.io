@@ -1,3 +1,2 @@
-# Pradyumn Portfolio v4
+# PradyumnTiwareNexus Portfolio 
 
-Glass-blue theme, hover-glow effects, avatar included. Replace contact form backend as needed.
