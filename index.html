@@ -5,30 +5,30 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>PradyumnTiwareNexus — Cybersecurity Researcher</title>
   <meta name="description" content="Pradyumn Tiware Nexus — Cybersecurity Researcher, Bug Bounty Hunter, Recon Automation Developer."/>
-  <!-- favicon: explicit sizes to help browsers pick correct icon -->
+  <!-- favicon: explicit sizes -->
   <link rel="icon" href="assets/favicon.png" sizes="32x32" type="image/png" />
   <link rel="icon" href="assets/favicon.png" sizes="16x16" type="image/png" />
-  <!-- iOS / mobile home screen icon -->
   <link rel="apple-touch-icon" href="assets/favicon.png" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
   <style>
+    /* ==========================
+       THEME: Neon cyber-hacker (dark)
+       ========================== */
     :root{
-      --bg:#071017;
-      --bg-2:#041115;
+      --bg: #071017;     /* deep teal/black */
+      --bg-2: #02121a;   /* top teal tint */
       --card:#071719;
       --glass: rgba(255,255,255,0.03);
-      --accent1:#2de1e6; /* cyan */
-      --accent2:#ff5aa7; /* pink */
+      --accent1:#00f0ea; /* neon cyan */
+      --accent2:#ff3db2; /* neon pink */
       --muted:#9fb0b1;
       --glass-border: rgba(255,255,255,0.05);
       --chip-bg: rgba(255,255,255,0.02);
-      --neon: 0 8px 30px rgba(45,225,230,0.06);
-      --text: #dbeef0;
-      --text-on-accent: #042223;
-      --card-glow: rgba(45,225,230,0.06);
+      --neon: 0 12px 50px rgba(0,240,234,0.07);
+      --text:#dffcff;
+      --text-on-accent:#031617;
       --trans-quick: 180ms;
     }
-    /* light theme variables */
     :root[data-theme="light"]{
       --bg: #f6fbfb;
       --bg-2: #eaf8f8;
@@ -42,10 +42,19 @@
       --neon: 0 10px 40px rgba(0,110,106,0.06);
       --text: #072023;
       --text-on-accent: #ffffff;
-      --card-glow: rgba(0,110,106,0.06);
     }
 
-    html,body{height:100%;margin:0;background:linear-gradient(180deg,var(--bg-2) 0%, var(--bg) 60%);color:var(--text);font-family:Inter,system-ui,Segoe UI,Roboto,"Helvetica Neue",Arial;overflow-x:hidden}
+    html,body{
+      height:100%;margin:0;
+      background:
+        radial-gradient(1200px 600px at 10% 8%, rgba(0,240,234,0.03), transparent 6%),
+        radial-gradient(900px 500px at 95% 90%, rgba(255,61,178,0.02), transparent 6%),
+        linear-gradient(180deg,var(--bg-2) 0%, var(--bg) 75%);
+      color:var(--text);
+      font-family:Inter,system-ui,Segoe UI,Roboto,"Helvetica Neue",Arial;
+      overflow-x:hidden;
+    }
+
     *{box-sizing:border-box}
     .container{width:min(1200px,94%);margin:0 auto;padding:28px 0;}
     header.nav{padding:18px 0;display:flex;align-items:center;justify-content:space-between;gap:12px}
@@ -61,24 +70,14 @@
     .card.visible{opacity:1;transform:translateY(0)}
 
     /* profile card */
-    .profile-card{position:relative;padding-top:34px;text-align:center}
+    .profile-card{position:relative;padding-top:34px;text-align:center;z-index:12}
     .avatar-wrap{width:200px;height:200px;margin:0 auto;border-radius:50%;position:relative;display:flex;align-items:center;justify-content:center;transform:scale(.86);opacity:0;transition:transform .7s cubic-bezier(.2,.9,.2,1), opacity .7s}
     .avatar-wrap.pop { transform:scale(1); opacity:1 }
-    .avatar{width:90%;height:90%;object-fit:cover;border-radius:50%;display:block;border:10px solid #111;transition:transform .25s ease}
+    .avatar{width:90%;height:90%;object-fit:cover;border-radius:50%;display:block;border:10px solid #071217;transition:transform .25s ease}
     .avatar:hover{transform:translateY(-6px) scale(1.02)}
-    /* neon ring */
-    .avatar-wrap::before{
-      content:"";position:absolute;inset: -18px; border-radius:50%;
-      background:linear-gradient(130deg,var(--accent1),var(--accent2));
-      filter:blur(12px);opacity:0.0;z-index:-2; transform:scale(1.03);
-      transition:opacity .9s ease, transform .9s ease;
-    }
+    .avatar-wrap::before{ content:"";position:absolute;inset:-18px;border-radius:50%; background:linear-gradient(130deg,var(--accent1),var(--accent2)); filter:blur(14px); opacity:0; z-index:-2; transform:scale(1.02); transition:opacity .9s ease, transform .9s ease; }
     .avatar-wrap.pulse::before{ opacity:0.95; transform:scale(1.07); animation: neon-pulse 2.6s infinite ease-in-out; }
-    @keyframes neon-pulse {
-      0%{ filter: blur(10px); transform:scale(1.03); opacity:0.7 }
-      50%{ filter: blur(20px); transform:scale(1.08); opacity:1 }
-      100%{ filter: blur(10px); transform:scale(1.03); opacity:0.7 }
-    }
+    @keyframes neon-pulse { 0%{ filter:blur(10px); transform:scale(1.03); opacity:0.6 } 50%{ filter:blur(20px); transform:scale(1.08); opacity:1 } 100%{ filter:blur(10px); transform:scale(1.03); opacity:0.6 } }
 
     .profile-name{margin:12px 0 6px;font-weight:800;font-family:Montserrat;font-size:20px;color:var(--text)}
     .profile-sub{color:var(--muted);font-size:13px}
@@ -102,18 +101,16 @@
     /* sections */
     .section{margin-top:34px}
     .section h2{font-family:Montserrat;margin:0 0 14px}
-    /* about grid */
     .about-grid{display:grid;grid-template-columns:1fr 360px;gap:22px}
     .about-left{line-height:1.6}
     .focus-list{margin:12px 0;padding-left:18px}
     .focus-list li{margin:8px 0}
-    /* stats / chips column */
+
     .side-chips{display:grid;grid-template-columns:1fr;gap:12px;padding:14px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.008), rgba(255,255,255,0.006));}
     .chip{display:inline-block;padding:10px 14px;border-radius:10px;background:var(--chip-bg);margin:8px 8px 8px 0;border:1px solid rgba(255,255,255,0.02);transition:transform .18s ease, box-shadow .18s ease}
     .chip:hover{transform:translateY(-8px);box-shadow:0 14px 40px rgba(0,0,0,0.6), 0 6px 18px rgba(45,225,230,0.06)}
     .big-stat{font-size:28px;font-weight:800;color:var(--accent1);text-align:center;padding:20px;border-radius:12px}
 
-    /* tools grid & project cards */
     .tools-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:8px}
     .tools-col h3{margin:0 0 12px;font-size:18px;color:var(--text)}
     .tool{display:inline-flex;align-items:center;gap:12px;padding:12px 16px;border-radius:12px;background:var(--chip-bg);margin:8px;border:1px solid rgba(255,255,255,0.02);transition:transform .15s ease}
@@ -125,7 +122,6 @@
     .project-card:hover{transform:translateY(-8px);box-shadow:0 30px 60px rgba(0,0,0,0.25)}
     .project-thumb{height:110px;border-radius:8px;background:linear-gradient(135deg,var(--accent1),var(--accent2));display:flex;align-items:center;justify-content:center;color:#042223;font-weight:800}
 
-    /* modal */
     .modal-backdrop{position:fixed;inset:0;background:rgba(2,6,6,0.6);backdrop-filter: blur(4px);display:none;align-items:center;justify-content:center;z-index:12000;padding:20px}
     .modal-backdrop.show{display:flex}
     .modal{width:min(920px,100%);max-height:92vh;overflow:auto;border-radius:14px;background:var(--card);padding:18px;border:1px solid var(--glass-border);box-shadow:0 30px 80px rgba(0,0,0,0.6)}
@@ -135,37 +131,40 @@
     .modal .meta{padding:12px;border-radius:8px;background:var(--chip-bg)}
     .modal .meta a{display:inline-block;margin-top:8px;padding:8px 12px;border-radius:8px;background:linear-gradient(90deg,var(--accent1),var(--accent2));color:var(--text-on-accent);text-decoration:none}
 
-    /* hacker gif box */
     .hacker-box{height:160px;border-radius:12px;border:1px dashed rgba(255,255,255,0.03);display:flex;align-items:center;justify-content:center;background:linear-gradient(180deg, rgba(255,255,255,0.004), rgba(255,255,255,0.002))}
     .hacker-box img{max-height:140px;border-radius:10px;opacity:0;transform:translateY(8px);transition:opacity .6s ease .45s, transform .6s ease .45s}
     .hacker-box.visible img{opacity:1;transform:translateY(0)}
 
-    /* music player */
-    .music-box{padding:18px;border-radius:12px;background:linear-gradient(90deg, rgba(255,255,255,0.008), rgba(255,255,255,0.006))}
-    .play-btn{padding:10px 16px;border-radius:10px;background:linear-gradient(90deg,var(--accent1),var(--accent2));color:#031517;font-weight:800;border:none}
+    /* ==========================
+       MUSIC PLAYER - Spotify-like look
+       ========================== */
+    .music-box{padding:18px;border-radius:12px;background:linear-gradient(90deg, rgba(255,255,255,0.008), rgba(255,255,255,0.006)); display:flex; gap:16px; align-items:center;}
+    .player-card{display:flex;gap:14px;align-items:center;width:100%}
+    .album-art{width:84px;height:84px;border-radius:8px;background:linear-gradient(135deg,var(--accent1),var(--accent2));display:flex;align-items:center;justify-content:center;color:var(--text-on-accent);font-weight:800;flex:0 0 84px;box-shadow:0 10px 30px rgba(0,0,0,0.4)}
+    .player-meta{flex:1;min-width:0}
+    .track-title{font-weight:800;color:var(--text);font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .track-sub{font-size:12px;color:var(--muted);margin-top:4px}
+    .player-controls{display:flex;align-items:center;gap:12px}
+    .play-btn{width:44px;height:44px;border-radius:14px;border:none;background:linear-gradient(90deg,var(--accent1),var(--accent2));display:flex;align-items:center;justify-content:center;color:var(--text-on-accent);font-weight:800;cursor:pointer;box-shadow:0 10px 30px rgba(0,0,0,0.35)}
+    .play-btn.paused{background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--text)}
 
-    /* contact */
-    .contact-form input,.contact-form textarea,.contact-form select{width:100%;padding:12px;border-radius:10px;background:transparent;border:1px solid rgba(255,255,255,0.04);color:var(--muted);margin-bottom:12px}
-    .contact-form button{width:100%;padding:12px;border-radius:12px;background:linear-gradient(90deg,var(--accent1),var(--accent2));border:none;color:var(--text-on-accent);font-weight:800}
+    .progress-wrap{height:8px;background:rgba(255,255,255,0.04);border-radius:999px;overflow:hidden;margin-top:12px;position:relative}
+    .progress{height:100%;width:0%;background:linear-gradient(90deg,var(--accent1),var(--accent2));border-radius:inherit;transition:width .12s linear}
+
+    /* animated bars (small visualizer like Spotify) */
+    .bars {display:flex;gap:4px;align-items:flex-end;height:20px;margin-left:6px}
+    .bar {width:4px;background:linear-gradient(180deg,var(--accent1),var(--accent2));border-radius:2px;animation: barAnim 800ms infinite ease-in-out; transform-origin:bottom}
+    .bar:nth-child(2){animation-delay:100ms}
+    .bar:nth-child(3){animation-delay:200ms}
+    .bar:nth-child(4){animation-delay:300ms}
+    .bar:nth-child(5){animation-delay:450ms}
+    @keyframes barAnim { 0%{transform:scaleY(0.2)} 50%{transform:scaleY(1)} 100%{transform:scaleY(0.3)} }
 
     /* particles canvas (behind content) */
     #particles-canvas{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:0.28}
 
     /* custom cursor (desktop) */
-    #cursor {
-      position:fixed;
-      left:0;top:0;
-      width:28px;height:28px;border-radius:50%;
-      pointer-events:none;z-index:9999;
-      transform:translate(-50%,-50%);
-      transition:transform .08s ease, width .12s ease, height .12s ease, opacity .12s ease;
-      background-repeat:no-repeat;
-      background-position:center;
-      background-size:contain;
-      background-image: url('assets/cursor-game.png');
-      box-shadow:0 8px 24px rgba(45,225,230,0.12);
-      opacity:1;
-    }
+    #cursor { position:fixed; left:0; top:0; width:28px;height:28px;border-radius:50%; pointer-events:none;z-index:9999; transform:translate(-50%,-50%); transition:transform .08s ease, width .12s ease, height .12s ease, opacity .12s ease; background-repeat:no-repeat; background-position:center; background-size:contain; background-image: url('assets/cursor-game.png'); box-shadow:0 8px 24px rgba(45,225,230,0.12); opacity:1; }
     #ripple { position:fixed;left:0;top:0;width:72px;height:72px;border-radius:50%;pointer-events:none;z-index:9998;border:2px dashed rgba(255,255,255,0.04);transform:translate(-50%,-50%) scale(1);opacity:0;transition:opacity .2s ease, transform .28s ease;}
     #cursor.fallback { background-image:none; }
     #cursor.fallback::after { content:"";display:block;width:10px;height:10px;border-radius:50%;background:linear-gradient(90deg,var(--accent2),var(--accent1));transform:translate(50%,50%); }
@@ -184,7 +183,6 @@
     .preloader .loader-dots { color:var(--muted);font-size:13px;opacity:0.9 }
     @keyframes logo-bob { 0% { transform: translateY(0) rotate(-2deg) } 100% { transform: translateY(-8px) rotate(2deg) } }
 
-    /* small util */
     .row{display:flex;gap:12px;align-items:center}
     footer.footer{padding:24px 0;color:var(--muted);text-align:center;font-size:13px}
     @media (max-width:980px){
@@ -194,10 +192,12 @@
       .tools-grid{grid-template-columns:1fr}
       .avatar-wrap{width:150px;height:150px}
       .preloader .logo { width:76px;height:76px }
+      .music-box{flex-direction:column;align-items:flex-start}
+      .album-art{width:72px;height:72px;flex:0 0 72px}
     }
-    /* prefers reduced motion */
     @media (prefers-reduced-motion: reduce){
       * { transition: none !important; animation: none !important; scroll-behavior: auto !important; }
+      .bar { animation: none; transform:scaleY(.6) }
     }
   </style>
 </head>
@@ -339,19 +339,46 @@
         </div>
       </section>
 
-      <!-- Music & Mood -->
+      <!-- Music & Mood (Spotify-like) -->
       <section id="music" class="section">
         <div class="container card music-box">
           <h2>Music & Mood</h2>
           <p style="color:var(--muted)">A small playlist to keep focused while reconning.</p>
-          <div style="display:flex;gap:12px;align-items:center;margin-top:10px">
-            <button id="playBtn" class="play-btn">Play</button>
-            <select id="trackSelect" style="padding:10px;border-radius:8px;background:transparent;color:var(--muted);border:1px solid rgba(255,255,255,0.04)">
-              <option value="assets/audio/working-energy.mp3">Working Energy — Kinhbach</option>
-            </select>
-            <div id="trackLabel" style="color:var(--muted);margin-left:8px">Loaded: Working Energy — Kinhbach</div>
+
+          <div class="player-card" style="margin-top:12px;">
+            <div class="album-art" id="albumArt">PT</div>
+
+            <div class="player-meta">
+              <div class="track-title" id="trackTitle">Working Energy — Kinhbach</div>
+              <div class="track-sub" id="trackArtist">Focus playlist</div>
+
+              <div class="progress-wrap" aria-hidden="true">
+                <div class="progress" id="progressBar" style="width:0%"></div>
+              </div>
+
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-top:8px">
+                <div style="display:flex;align-items:center;gap:12px">
+                  <div class="player-controls">
+                    <button id="playBtn" class="play-btn">▶</button>
+                    <div style="font-size:13px;color:var(--muted)" id="timeLabel">0:00 / 3:21</div>
+                  </div>
+                </div>
+
+                <!-- small animated bars visualizer -->
+                <div style="display:flex;align-items:center">
+                  <div class="bars" aria-hidden="true">
+                    <div class="bar" style="height:10px"></div>
+                    <div class="bar" style="height:16px"></div>
+                    <div class="bar" style="height:12px"></div>
+                    <div class="bar" style="height:14px"></div>
+                    <div class="bar" style="height:9px"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <audio id="audio" src="assets/audio/working-energy.mp3"></audio>
           </div>
-          <audio id="audio" src="assets/audio/working-energy.mp3"></audio>
         </div>
       </section>
 
@@ -457,11 +484,9 @@
     }
     let loaded = false;
     window.addEventListener('load', ()=> { loaded = true; finishPreloader(); });
-    // fallback: if load takes too long, ensure we still hide after a maximum wait,
-    // but also keep preloader visible at least MIN_PRELOAD_MS.
+    // fallback: if load takes too long, still attempt to finish (graceful fallback)
     const MIN_PRELOAD_MS = 400; // 0.4 seconds as requested
-
-    // If load hasn't finished by 2000ms, still attempt to finish (graceful fallback)
+    // If load hasn't finished by 2000ms, still attempt to finish
     setTimeout(()=> { if(!loaded) finishPreloader(); }, 2000);
 
     function finishPreloader() {
@@ -511,8 +536,8 @@
         el.addEventListener('mouseleave', ()=> { cursor.classList.remove('cursor-large'); });
       });
     } else {
-      cursor.style.display = 'none';
-      ripple.style.display = 'none';
+      if (cursor) cursor.style.display = 'none';
+      if (ripple) ripple.style.display = 'none';
     }
 
     // -------------------------------
@@ -539,7 +564,6 @@
       }
       setTimeout(tickType, deleting ? 40 : 60);
     }
-    // start after reveal
     setTimeout(()=> { tickType(); }, 900);
 
     // -------------------------------
@@ -553,21 +577,19 @@
       const cy = rect.top + rect.height/2;
       const dx = (e.clientX - cx) / rect.width;
       const dy = (e.clientY - cy) / rect.height;
-      const tx = dx * 12; // translate X small
-      const ty = dy * 10; // translate Y small
-      const rz = dx * 6; // small rotation
-      avatarImg.style.transform = `translate(${tx}px, ${ty}px) rotate(${rz}deg) scale(1.03)`;
+      const tx = dx * 12;
+      const ty = dy * 10;
+      const rz = dx * 6;
+      if(avatarImg) avatarImg.style.transform = `translate(${tx}px, ${ty}px) rotate(${rz}deg) scale(1.03)`;
     }
-    function resetAvatar() { avatarImg.style.transform = ''; }
+    function resetAvatar() { if(avatarImg) avatarImg.style.transform = ''; }
     if (window.matchMedia && window.matchMedia('(pointer: fine)').matches) {
       heroSection.addEventListener('mousemove', onHeroMouse);
       heroSection.addEventListener('mouseleave', resetAvatar);
-      // touch devices skip
     }
 
     // -------------------------------
-    // PARTICLES BACKGROUND (canvas)
-    // lightweight, performant; disabled on mobile / reduced-motion
+    // PARTICLES BACKGROUND
     // -------------------------------
     (function initParticles(){
       const canvas = document.getElementById('particles-canvas');
@@ -579,7 +601,7 @@
       const ctx = canvas.getContext('2d');
       let w = canvas.width = innerWidth;
       let h = canvas.height = innerHeight;
-      const particleCount = Math.min(80, Math.floor((w*h) / 90000)); // scale by viewport
+      const particleCount = Math.min(80, Math.floor((w*h) / 90000));
       const particles = [];
       function rand(min,max){ return Math.random()*(max-min)+min; }
 
@@ -607,8 +629,8 @@
           if (p.y > h + 10) p.y = -10;
           ctx.beginPath();
           const g = ctx.createRadialGradient(p.x,p.y,0,p.x,p.y,p.r*8);
-          g.addColorStop(0, `rgba(45,225,230,${p.alpha})`);
-          g.addColorStop(1, `rgba(255,90,140,0)`);
+          g.addColorStop(0, `rgba(0,240,234,${p.alpha})`);
+          g.addColorStop(1, `rgba(255,61,178,0)`);
           ctx.fillStyle = g;
           ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
           ctx.fill();
@@ -619,7 +641,7 @@
     })();
 
     // -------------------------------
-    // VISITOR COUNTER (CountAPI) with animated number
+    // VISITOR COUNTER (CountAPI)
     // -------------------------------
     (function(){
       const el = document.getElementById('visits');
@@ -646,26 +668,6 @@
     function easeOutCubic(t){ return 1 - Math.pow(1 - t, 3) }
 
     // -------------------------------
-    // AUDIO PLAYER
-    // -------------------------------
-    const audio = document.getElementById('audio');
-    const playBtn = document.getElementById('playBtn');
-    const trackSelect = document.getElementById('trackSelect');
-    const trackLabel = document.getElementById('trackLabel');
-
-    if (playBtn) {
-      playBtn.addEventListener('click', ()=>{
-        if(audio.paused){ audio.play().catch(()=>{}); playBtn.innerText='Pause'; } else { audio.pause(); playBtn.innerText='Play'; }
-      });
-      trackSelect.addEventListener('change', (e)=>{
-        audio.src = e.target.value;
-        const txt = e.target.options[e.target.selectedIndex].text;
-        trackLabel.innerText = 'Loaded: ' + txt;
-        audio.play().catch(()=>{}); playBtn.innerText='Pause';
-      });
-    }
-
-    // -------------------------------
     // PROJECT MODAL
     // -------------------------------
     const projectGrid = document.getElementById('projectGrid');
@@ -682,7 +684,6 @@
       modalDesc.innerText = data.desc || '';
       modalRepoLink.href = data.repo || '#';
       modalRepoTitle.innerText = data.repo ? 'Repository' : 'Repo';
-      // screenshot placeholder (if you want to use real screenshots, extend data with screenshot URL)
       modalScreenshot.innerText = data.title || 'Preview';
       modalBackdrop.classList.add('show'); modalBackdrop.setAttribute('aria-hidden','false');
       modalClose.focus();
@@ -690,7 +691,6 @@
 
     function closeModal(){
       modalBackdrop.classList.remove('show'); modalBackdrop.setAttribute('aria-hidden','true');
-      // return focus to first project card
       const first = projectGrid.querySelector('.project-card');
       if (first) first.focus();
     }
@@ -715,15 +715,62 @@
     // -------------------------------
     // Avatar image fallback
     // -------------------------------
-    document.getElementById('avatar-img').addEventListener('error', function(){
-      this.src = 'data:image/svg+xml;utf8,' + encodeURIComponent(
-        `<svg xmlns="http://www.w3.org/2000/svg" width="320" height="320"><rect width="100%" height="100%" rx="20" fill="#0b1113"/><text x="50%" y="52%" fill="#bff9fa" font-size="72" font-family="Montserrat" font-weight="800" text-anchor="middle" alignment-baseline="middle">PTN</text></svg>`
-      );
-    });
+    const avatarImgEl = document.getElementById('avatar-img');
+    if(avatarImgEl){
+      avatarImgEl.addEventListener('error', function(){
+        this.src = 'data:image/svg+xml;utf8,' + encodeURIComponent(
+          `<svg xmlns="http://www.w3.org/2000/svg" width="320" height="320"><rect width="100%" height="100%" rx="20" fill="#0b1113"/><text x="50%" y="52%" fill="#bff9fa" font-size="72" font-family="Montserrat" font-weight="800" text-anchor="middle" alignment-baseline="middle">PTN</text></svg>`
+        );
+      });
+    }
+
+    // -------------------------------
+    // MUSIC PLAYER (controls + UI bindings)
+    // -------------------------------
+    (function musicPlayer(){
+      const audio = document.getElementById('audio');
+      const playBtn = document.getElementById('playBtn');
+      const progressBar = document.getElementById('progressBar');
+      const timeLabel = document.getElementById('timeLabel');
+      const titleEl = document.getElementById('trackTitle');
+
+      if(!audio || !playBtn) return;
+      // update time label helper
+      function fmt(s){
+        if (!isFinite(s)) return '0:00';
+        const m = Math.floor(s/60); const sec = Math.floor(s%60).toString().padStart(2,'0');
+        return `${m}:${sec}`;
+      }
+
+      audio.addEventListener('loadedmetadata', ()=> {
+        timeLabel.innerText = `0:00 / ${fmt(audio.duration)}`;
+      });
+      audio.addEventListener('timeupdate', ()=> {
+        const pct = (audio.currentTime / (audio.duration || 1)) * 100;
+        progressBar.style.width = pct + '%';
+        timeLabel.innerText = `${fmt(audio.currentTime)} / ${fmt(audio.duration)}`;
+      });
+      playBtn.addEventListener('click', ()=> {
+        if(audio.paused){ audio.play().catch(()=>{}); playBtn.innerText = '❚❚'; playBtn.classList.remove('paused'); }
+        else { audio.pause(); playBtn.innerText = '▶'; playBtn.classList.add('paused'); }
+      });
+
+      // allow clicking progress bar to seek
+      const progWrap = progressBar.parentElement;
+      progWrap.addEventListener('click', (e)=>{
+        const rect = progWrap.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const pct = x / rect.width;
+        audio.currentTime = (audio.duration || 0) * pct;
+      });
+
+      // set initial state
+      playBtn.classList.add('paused');
+      playBtn.innerText = '▶';
+    })();
 
     // small visibility: reveal immediately if JS disabled or fast load
     document.addEventListener('DOMContentLoaded', ()=> {
-      // slight stagger reveal for non-preloader path
       setTimeout(()=> { document.querySelectorAll('.card').forEach((c,i)=> setTimeout(()=> c.classList.add('visible'), i*50)); }, 80);
     });
   </script>
